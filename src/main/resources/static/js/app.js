@@ -19,7 +19,9 @@ var Module = (function () {
             if (data.length > 0) {
                 data.forEach(blueprint => {
                     const row = document.createElement("tr");
-                    row.innerHTML = `<td>${blueprint.name}</td><td>${blueprint.points.length}</td>`;
+                    row.innerHTML = `<td>${blueprint.name}</td>
+                    <td>${blueprint.points.length}</td>
+                    <td><button onclick="Module.openBlueprint('${blueprint.name}')">Open</button></td>`
                     tableBody.appendChild(row);
                 });
             } else {
