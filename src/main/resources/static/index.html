@@ -12,10 +12,11 @@
     </head>
 <body>
     <h1>Blueprints</h1>
-    <label for="author">Author:</label>
-    <input type="text" id="author" name="author" placeholder="Enter author name">
-    <button onclick="Module.updateAuthor()">Get Blueprints</button>
-<table border="1">
+<label for="author">Author:</label>
+<input type="text" id="author" name="author" placeholder="Enter author name">
+<button class="btn btn-success" onclick="Module.updateAuthor()">Get Blueprints</button>
+
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Names</th>
@@ -25,8 +26,12 @@
     </thead>
     <tbody id="blueprints-table"></tbody>
 </table>
-<script src="js/apimock.js"></script>
+
+<!-- Canvas para visualizar los blueprints -->
+<canvas id="blueprint-canvas" width="500" height="500" style="border:1px solid black;"></canvas>
+
 <script src="js/app.js"></script>
+
 </body>
 
 </html>
