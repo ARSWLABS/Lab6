@@ -1,9 +1,15 @@
 var Module = (function () {
     let currentAuthor = "";
+    let currentAPI = apimock; // Cambia entre apimock y apiclient
+
+    function toggleAPI() {
+        currentAPI = (currentAPI === apimock) ? apiclient : apimock;
+        alert("API switched to " + (currentAPI === apimock ? "Mock" : "Real"));
+    }
 
     function updateAuthor() {
-        const authorInput = document.getElementById("author").value;
-        if (authorInput.trim() === "") {
+        const authorInput = $("#author").val().trim();
+        if (authorInput === "") {
             alert("Please enter an author name.");
             return;
         }
@@ -12,52 +18,30 @@ var Module = (function () {
     }
 
     function fetchBlueprints() {
-        fetch(`/blueprints/${currentAuthor}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const tableBody = document.getElementById("blueprints-table");
-                tableBody.innerHTML = "";
+        currentAPI.getBlueprintsByAuthor(currentAuthor, function (data) {
+            const tableBody = $("#blueprints-table");
+            tableBody.empty();
 
-                if (data.length > 0) {
-                    data.forEach(blueprint => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
-                            <td>${blueprint.name}</td>
-                            <td>${blueprint.points.length}</td>
-                            <td><button class="btn btn-primary" onclick="Module.openBlueprint('${blueprint.name}')">Open</button></td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    alert("No blueprints found for this author.");
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching blueprints:", error);
-                alert("Failed to load blueprints.");
-            });
+            if (data.length > 0) {
+                data.forEach(blueprint => {
+                    const row = `<tr>
+                        <td>${blueprint.name}</td>
+                        <td>${blueprint.points.length}</td>
+                        <td><button class="btn btn-primary" onclick="Module.openBlueprint('${blueprint.name}')">Open</button></td>
+                    </tr>`;
+                    tableBody.append(row);
+                });
+            } else {
+                alert("No blueprints found for this author.");
+            }
+        });
     }
 
     function openBlueprint(blueprintName) {
-        fetch(`/blueprints/${currentAuthor}/${blueprintName}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                drawBlueprint(data);
-            })
-            .catch(error => {
-                console.error("Error opening blueprint:", error);
-                alert("Failed to open blueprint.");
-            });
+        currentAPI.getBlueprintsByNameAndAuthor(currentAuthor, blueprintName, function (data) {
+            $("#blueprint-name").text(blueprintName);
+            drawBlueprint(data);
+        });
     }
 
     function drawBlueprint(blueprint) {
@@ -66,7 +50,7 @@ var Module = (function () {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        
+
         if (blueprint.points.length > 0) {
             ctx.moveTo(blueprint.points[0].x, blueprint.points[0].y);
             blueprint.points.forEach(point => {
@@ -81,6 +65,7 @@ var Module = (function () {
 
     return {
         updateAuthor: updateAuthor,
-        openBlueprint: openBlueprint
+        openBlueprint: openBlueprint,
+        toggleAPI: toggleAPI
     };
 })();
