@@ -1,7 +1,7 @@
 # Lab6
-## Integrantes: Juan Cancelado Diego Chicuazuque
+## Integrantes: Juan Cancelado y Diego Chicuazuque
 
-# Blueprints Web Application
+# 🏗️ Blueprints Web Application
 
 ## Descripción
 Este proyecto es una aplicación web que permite a los usuarios visualizar y gestionar planos (blueprints) mediante una interfaz interactiva. La aplicación utiliza HTML, CSS y JavaScript en el frontend, y un backend basado en Spring Boot que maneja la persistencia de datos.
@@ -12,7 +12,7 @@ Este proyecto es una aplicación web que permite a los usuarios visualizar y ges
 - Visualización interactiva de planos en un lienzo (canvas HTML5).
 - Alternancia entre una API real y un modo de simulación con datos mock.
 
-## Tecnologías Utilizadas
+## 🛠️ Tecnologías Utilizadas
 - **Frontend:** HTML, CSS, Bootstrap, JavaScript (JQuery).
 - **Backend:** Java con Spring Boot.
 - **Base de datos:** MongoDB (o almacenamiento en memoria para pruebas).
@@ -22,7 +22,7 @@ Este proyecto es una aplicación web que permite a los usuarios visualizar y ges
 - Tener instalado **Java 11+**.
 - Tener instalado **Apache Maven**.
 
-### Pasos para ejecutar
+### 🚀 Pasos para ejecutar
 1. Clonar el repositorio del proyecto.
 2. Navegar al directorio del proyecto y ejecutar:
    ```sh
@@ -33,7 +33,7 @@ Este proyecto es una aplicación web que permite a los usuarios visualizar y ges
    http://localhost:8080
    ```
 
-## Estructura del Proyecto
+## 📂 Estructura del Proyecto
 ```
 /
 |-- src/
