@@ -21,9 +21,11 @@ var Module = (function () {
         currentAPI.getBlueprintsByAuthor(currentAuthor, function (data) {
             const tableBody = $("#blueprints-table");
             tableBody.empty();
-
+            let totalPoints = 0;
+    
             if (data.length > 0) {
                 data.forEach(blueprint => {
+                    totalPoints += blueprint.points.length;
                     const row = `<tr>
                         <td>${blueprint.name}</td>
                         <td>${blueprint.points.length}</td>
@@ -31,11 +33,19 @@ var Module = (function () {
                     </tr>`;
                     tableBody.append(row);
                 });
+    
+                const totalRow = `<tr>
+                    <td colspan="2" style="font-weight: bold;">Total de puntos:</td>
+                    <td style="font-weight: bold;">${totalPoints}</td>
+                </tr>`;
+                tableBody.append(totalRow);
+    
             } else {
                 alert("No blueprints found for this author.");
             }
         });
     }
+    
 
     function openBlueprint(blueprintName) {
         currentAPI.getBlueprintsByNameAndAuthor(currentAuthor, blueprintName, function (data) {
